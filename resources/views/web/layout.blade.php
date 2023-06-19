@@ -55,8 +55,8 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#index">Home</a></li>
-          <li><a class="nav-link scrollto" href="#features">Features</a></li>
+          <li><a class="nav-link scrollto active" href="{{ route('web.home') }}#index">Home</a></li>
+          <li><a class="nav-link scrollto" href="{{ route('web.home') }}#features">Features</a></li>
           <li><a class="nav-link scrollto" href="{{ route('web.counter')}}">Click Counter</a></li>
           
           <!--
