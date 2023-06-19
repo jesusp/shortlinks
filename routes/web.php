@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Web\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('/', [HomeController::class , 'index'])->name('home');
+Route::post('/', [HomeController::class , 'index'])->name('home');
+
+
+
+Route::get('/{slug}', [HomeController::class , 'openLink'])->name('open-link');
+
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
