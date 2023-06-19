@@ -20,7 +20,7 @@ class Helpers
         $url = Helpers::getValidLink($url);
 
         $hasExtension = !!pathinfo(parse_url($url, PHP_URL_HOST), PATHINFO_EXTENSION);
-        $isValid = filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED);
+        $isValid = filter_var($url, FILTER_VALIDATE_URL, \FILTER_FLAG_HOST_REQUIRED);
         return $isValid && $hasExtension;
     }
 
