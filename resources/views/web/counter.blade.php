@@ -23,14 +23,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="fs-6 pt-3">
-                    <strong>Short Link:</strong> <a href="{{ $link }}" target="_blank">{{ $link }}</a>
-                </div>
-                <div class="fs-5 py-3">
-                    <strong><span class="fs-1">{{ $clicks }}</span></strong> Clicks
-                </div>
+                @if(isset($link) && $link)
+                    <div class="fs-6 pt-3">
+                        <strong>Short Link:</strong> <a href="{{ $link }}" target="_blank">{{ $link }}</a>
+                    </div>
+                    <div class="fs-5 py-3">
+                        <strong><span class="fs-1">{{ $clicks ?? 0 }}</span></strong> Clicks
+                    </div>
 
-                <a href="/" class="btn btn-primary mt-3">Shorten another URL</a>
+                    <a href="/" class="btn btn-primary mt-3">Shorten another URL</a>
+                    @endif
             </form>
 
         </div>
