@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>eBusiness Bootstrap Template - Index</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <title>Short Links</title>
+  <meta content="Short Links is a tool that helps you to get better urls to share, it helps you to get shorter links and get some analytics when someone get in." name="description">
+  <meta content="short,links,tiny,url,shorter,small" name="keywords">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
