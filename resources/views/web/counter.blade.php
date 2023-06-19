@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div  class="about-area area-padding">
+    <div  class="about-area area-padding" style="min-height: 600px;">
         <div class="container">
 
             <div class="row">
