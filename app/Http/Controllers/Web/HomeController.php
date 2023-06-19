@@ -69,10 +69,10 @@ class HomeController extends Controller {
             
             $shortLink = ShortLink::where('slug', $slug)->where('blocked', 0)->first();
             if($shortLink) {
-                $data['link'] = Helpers::getRealUrl($slug);
                 $data['shortLink'] = $shortLink;
                 $data['clicks'] = $shortLink->clicks;
             }
+            $data['link'] = Helpers::getRealUrl($slug);
             //dd($slug);
             //Helpers::getRealUrl();
         }

@@ -13,13 +13,13 @@
                     </div>
                 </div>
             </div>
-            <form method="GET">
+            
                 <div class="row pt-0 p-3">
                     <!-- single-well start-->
                     <div class="col">
                         <div class="input-group input-group-lg">
-                            <input required name="u" value="{{ $u ?? '' }}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" placeholder="Enter the link here">
-                            <button class="btn btn-primary" type="submit">Track Clicks</button>
+                            <input required name="u" value="{{ $u ?? '' }}" type="text" class="form-control track-link" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" placeholder="Enter the link here">
+                            <button class="btn btn-primary track-clicks">Track Clicks</button>
                         </div>
                     </div>
                 </div>
@@ -33,9 +33,23 @@
 
                     <a href="/" class="btn btn-primary mt-3">Shorten another URL</a>
                     @endif
-            </form>
+            
 
         </div>
     </div>
 
+@stop
+@section('scripts')
+<script>
+
+    $(() => {
+
+        $(".track-clicks").on('click', function() {
+            let link = $("input.track-link").val();
+            if(link) {
+                document.location = `{{ route('web.counter') }}?u=${link}`;
+            }            
+        });
+    });
+</script>
 @stop
