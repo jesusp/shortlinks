@@ -35,7 +35,7 @@ class Helpers
             }
             //HERE NEED USER ID
             if($shortLink->save()) {
-                return route('home').'/'.$shortLink->slug;
+                return Helpers::getRealUrl($shortLink->slug);
             }
         }
         return $url; //null;
@@ -78,5 +78,10 @@ class Helpers
             }
         } catch(Exception $e) { }
         return false;
+    }
+
+    public static function getRealUrl($slug) {
+
+        return route('web.home').'/'.$slug;
     }
 }

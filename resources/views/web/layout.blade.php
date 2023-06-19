@@ -5,8 +5,8 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Short Links</title>
-  <meta content="Short Links is a tool that helps you to get better urls to share, it helps you to get shorter links and get some analytics when someone get in." name="description">
+  <title>ShortLinks</title>
+  <meta content="ShortLinks is a tool that helps you to get better urls to share, it helps you to get shorter links and get some analytics when someone get in." name="description">
   <meta content="short,links,tiny,url,shorter,small" name="keywords">
 
   <!-- Favicons -->
@@ -57,6 +57,8 @@
         <ul>
           <li><a class="nav-link scrollto active" href="#index">Home</a></li>
           <li><a class="nav-link scrollto" href="#features">Features</a></li>
+          <li><a class="nav-link scrollto" href="{{ route('web.counter')}}">Click Counter</a></li>
+          
           <!--
             <li><a class="nav-link scrollto" href="#services">Services</a></li>
             <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>

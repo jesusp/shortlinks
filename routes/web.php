@@ -16,12 +16,14 @@ use App\Http\Controllers\Web\HomeController;
 */
 
 
-Route::get('/', [HomeController::class , 'index'])->name('home');
-Route::post('/', [HomeController::class , 'index'])->name('home');
+Route::get('/', [HomeController::class , 'index'])->name('web.home');
+Route::post('/', [HomeController::class , 'index'])->name('web.home-post');
 
 
+Route::get('/counter', [HomeController::class , 'counter'])->name('web.counter');
 
-Route::get('/{slug}', [HomeController::class , 'openLink'])->name('open-link');
+
+Route::get('/{slug}', [HomeController::class , 'openLink'])->name('web.open-link');
 
 /*
 Route::get('/', function () {

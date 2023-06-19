@@ -27,7 +27,7 @@
                             <div class="pt-3">
 
                                 <a href="/" class="btn btn-primary">Try another URL</a>
-                                <a href="/" class="btn btn-primary">Check total clicks of your ShortLink</a>
+                                <a href="{{ route('web.counter') }}?u={{ $shortLink }}" class="btn btn-primary">Check total clicks of your ShortLink</a>
                             </div>
                         </div>
                     </div>

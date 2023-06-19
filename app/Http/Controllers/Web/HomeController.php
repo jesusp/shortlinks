@@ -60,21 +60,23 @@ class HomeController extends Controller {
         return Redirect::to('/')->with('error', 'Invalid link.');;
     }
 
-
-/*
-    //dd("HELLO");
-    if ($request->isMethod('post')) {
-
+    public function counter(Request $request) {
         $data = $request->all();
-        $url = $data['link'] ?? '';
-        if(!preg_match("~^(?:f|ht)tps?://~i", $url)) {
-            $url = 'http://'.$url;
+
+        if(isset($data['u'])) {
+            $urlData = explode("/", $data['u']);
+            $slug = end($urlData);
+            
+            $shortLink = ShortLink::where('slug', $slug)->where('blocked', 0)->first();
+            if($shortLink) {
+                $data['link'] = Helpers::getRealUrl($slug);
+                $data['shortLink'] = $shortLink;
+                $data['clicks'] = $shortLink->clicks;
+            }
+            //dd($slug);
+            //Helpers::getRealUrl();
         }
-
-        dd("is POST", $data, filter_var($url, FILTER_VALIDATE_URL));
-
+        return view('web.counter', $data);
     }
-    return view('web.home');
-    */
 
 }
