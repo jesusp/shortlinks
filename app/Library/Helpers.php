@@ -2,7 +2,7 @@
 namespace App\Library;
 
 use Illuminate\Support\Str;
-use App\Models\Shortlink;
+use App\Models\ShortLink;
 use App\Models\ShortlinkSession;
 /**
 * Analytics wrapper class
@@ -27,7 +27,7 @@ class Helpers
     public static function generateShortLink($url) {
 
         if(Helpers::validateLink($url)) {
-            $shortLink = new Shortlink();
+            $shortLink = new ShortLink();
             $shortLink->original_url = $url;
             $shortLink->slug = Helpers::generateRandomSlug();
             if(ShortLink::where('slug', $shortLink->slug)->first()) {

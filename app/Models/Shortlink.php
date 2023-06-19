@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Shortlink extends Model
+class ShortLink extends Model
 {
     protected $table = 'shortlinks';
     
