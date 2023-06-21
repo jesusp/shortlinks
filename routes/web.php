@@ -19,11 +19,7 @@ use App\Http\Controllers\Web\HomeController;
 Route::get('/', [HomeController::class , 'index'])->name('web.home');
 Route::post('/', [HomeController::class , 'index'])->name('web.home-post');
 
-
-Route::get('/counter', [HomeController::class , 'counter'])->name('web.counter');
-
-
-Route::get('/{slug}', [HomeController::class , 'openLink'])->name('web.open-link');
+/** START ADMIN ROUTE SECTION */
 Route::get('/sign-in', [\App\Http\Controllers\Auth\AuthController::class, 'login'])->name("login");
 
 Route::group(['namespace' => 'Admin', 'prefix' => "admin"], function () {
@@ -31,8 +27,13 @@ Route::group(['namespace' => 'Admin', 'prefix' => "admin"], function () {
     Route::post('/sign-in', [\App\Http\Controllers\Auth\AuthController::class, 'login']);
     Route::get('/sign-out', [\App\Http\Controllers\Auth\AuthController::class, 'logout'])->name("logout");
 });
+/** END ADMIN ROUTE SECTION */
+
+
+Route::get('/counter', [HomeController::class , 'counter'])->name('web.counter');
+Route::get('/{slug}', [HomeController::class , 'openLink'])->name('web.open-link');
 /*
-Route::get('/', function () {
-    return view('welcome');
-});
+    Route::get('/', function () {
+        return view('welcome');
+    });
 */
