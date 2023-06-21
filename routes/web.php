@@ -24,7 +24,13 @@ Route::get('/counter', [HomeController::class , 'counter'])->name('web.counter')
 
 
 Route::get('/{slug}', [HomeController::class , 'openLink'])->name('web.open-link');
+Route::get('/sign-in', [\App\Http\Controllers\Auth\AuthController::class, 'login'])->name("login");
 
+Route::group(['namespace' => 'Admin', 'prefix' => "admin"], function () {
+    
+    Route::post('/sign-in', [\App\Http\Controllers\Auth\AuthController::class, 'login']);
+    Route::get('/sign-out', [\App\Http\Controllers\Auth\AuthController::class, 'logout'])->name("logout");
+});
 /*
 Route::get('/', function () {
     return view('welcome');
