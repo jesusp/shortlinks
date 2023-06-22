@@ -1,4 +1,6 @@
   
+@extends('admin.layout')
+
 
 @section('content')  
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"

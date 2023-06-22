@@ -43,7 +43,7 @@ class AuthController extends Controller {
             session()->flash('messages', 'error|Contraseña incorrecta');
         }
 
-        if (Auth::guard('admin')->check()) {
+        if (Auth::guard('web')->check()) {
             return redirect()->route("admin.home");
         }
 
@@ -52,7 +52,7 @@ class AuthController extends Controller {
 
     public function logout(Request $request)
     {
-        Auth::guard('admin')->logout();
+        Auth::guard('web')->logout();
         session()->flush();
         return redirect('/');
     }

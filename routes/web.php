@@ -16,8 +16,7 @@ use App\Http\Controllers\Web\HomeController;
 */
 
 
-Route::get('/', [HomeController::class , 'index'])->name('web.home');
-Route::post('/', [HomeController::class , 'index'])->name('web.home-post');
+
 
 /** START ADMIN ROUTE SECTION */
 Route::get('/sign-in', [\App\Http\Controllers\Auth\AuthController::class, 'login'])->name("login");
@@ -30,6 +29,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => "admin"], function () {
 /** END ADMIN ROUTE SECTION */
 
 
+Route::get('/', [HomeController::class , 'index'])->name('web.home');
+Route::post('/', [HomeController::class , 'index'])->name('web.home-post');
 Route::get('/counter', [HomeController::class , 'counter'])->name('web.counter');
 Route::get('/{slug}', [HomeController::class , 'openLink'])->name('web.open-link');
 /*
