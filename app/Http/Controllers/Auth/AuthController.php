@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Auth;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller {
 
     public function login(Request $request)
     {
-
+        //dd(Auth::guard('users')); 
         if ($request->isMethod('POST')) {
             $email = $request->get('email');
             $pass = $request->get('password');
@@ -29,7 +30,7 @@ class AuthController extends Controller {
                 session()->flash('messages', 'error|No encontramos registros de este usuario');
                 return redirect()->back();
             }
-
+            
             if (Auth::guard('admin')->attempt(['email' => $email, 'password' => $pass], $remember)) {
 
                 $user->last_login = date('Y-m-d H:i:s');
@@ -43,7 +44,7 @@ class AuthController extends Controller {
             session()->flash('messages', 'error|Contraseña incorrecta');
         }
 
-        if (Auth::guard('web')->check()) {
+        if (Auth::guard('admin')->check()) {
             return redirect()->route("admin.home");
         }
 
@@ -52,8 +53,28 @@ class AuthController extends Controller {
 
     public function logout(Request $request)
     {
-        Auth::guard('web')->logout();
+        Auth::guard('admin')->logout();
         session()->flush();
         return redirect('/');
+    }
+
+    public function register(Request $request){
+        
+        if ($request->isMethod('POST')) {
+            $user = new User();
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required | email | unique:App\Models\User,email',
+                'password' => 'required',
+                
+            ]);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return view('admin.login');
+        }
+        
+        return view('admin.register');
     }
 }

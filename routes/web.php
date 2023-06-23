@@ -19,12 +19,16 @@ use App\Http\Controllers\Web\HomeController;
 
 
 /** START ADMIN ROUTE SECTION */
-Route::get('/sign-in', [\App\Http\Controllers\Auth\AuthController::class, 'login'])->name("login");
 
 Route::group(['namespace' => 'Admin', 'prefix' => "admin"], function () {
     
+    Route::get('/sign-in', [\App\Http\Controllers\Auth\AuthController::class, 'login'])->name("admin.login");
     Route::post('/sign-in', [\App\Http\Controllers\Auth\AuthController::class, 'login']);
-    Route::get('/sign-out', [\App\Http\Controllers\Auth\AuthController::class, 'logout'])->name("logout");
+    Route::get('/sign-out', [\App\Http\Controllers\Auth\AuthController::class, 'logout'])->name("admin.logout");
+    Route::get('/register', [\App\Http\Controllers\Auth\AuthController::class, 'register'])->name("admin.register");
+    Route::post('/register', [\App\Http\Controllers\Auth\AuthController::class, 'register'])->name("admin.register");
+    Route::get('/', [\App\Http\Controllers\Auth\HomeController::class, 'index'])->name("admin.home");
+    
 });
 /** END ADMIN ROUTE SECTION */
 
