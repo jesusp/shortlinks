@@ -12,7 +12,7 @@ class AuthController extends Controller {
 
     public function login(Request $request)
     {
-        //dd(Auth::guard('users')); 
+        //dd(Auth::guard('admin')); 
         if ($request->isMethod('POST')) {
             $email = $request->get('email');
             $pass = $request->get('password');
@@ -72,6 +72,7 @@ class AuthController extends Controller {
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->save();
+
             return view('admin.login');
         }
         
