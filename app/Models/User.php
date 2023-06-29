@@ -41,4 +41,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setVerificationCode()
+    {
+        $digits = env('APP_USERS_VERIFICATION_CODE_LENGTH', 6);
+        $this->verification_code =rand(pow(10, $digits - 1), pow(10, $digits) - 1);
+        $this->save();
+    }
 }

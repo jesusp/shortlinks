@@ -1,4 +1,3 @@
-
 @extends('admin.layout')
 
 
@@ -15,43 +14,45 @@
                 <div class="logo text-center">
                     <h1><a href="/"><span>Short</span>Links</a></h1>
                 </div>
-                <form method="post">
+                <form action="{{ route('admin.passwordVerificationCode') }}" method="POST">
                 {{ csrf_field() }}
-                  <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" id="name" aria-describedby="textHelp" name="name" required>
-                    @error('name')
-                      <div class="alert alert-danger" role="alert">
+                  <input type="text" class="form-control" name="email" id="email" @if($email) value="{{ $email }}" @else value="{{ old('email') }}" @endif hidden>
+                  @error('email')
+                    <div class="alert alert-danger" role="alert">
                         {{$message}}
+                    </div>
+                  @enderror
+                  <div class="mb-3">
+                    <label for="code" class="form-label">Codigo de verificación</label>
+                    <input type="text" class="form-control" id="verificationCode" aria-describedby="textHelp" name="code" value="{{ old('code') }}" required>
+                    @if(Session::has('code'))
+                      <div class="alert alert-danger" role="alert">
+                        {{Session::get('code')}}
                       </div>
-                    @enderror
+                    @endif
                   </div>
                   <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" id="email" aria-describedby="emailHelp" name="email" required>
-                    @error('email')
+                    <label for="email" class="form-label">Nueva contraseña</label>
+                    <input type="password" class="form-control"  id="password" name="password" required>
+                    @error('password')
                       <div class="alert alert-danger" role="alert">
-                        {{$message}}
+                          {{$message}}
                       </div>
                     @enderror
                   </div>
                   <div class="mb-4">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control  @error('password') is-invalid @enderror" value="{{ old('password') }}" id="password" name="password" required>
-                    @error('password')
+                    <label for="passwordConfirm" class="form-label">Confirmar contraseña</label>
+                    <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" required>
+                    @error('passwordConfirm')
                       <div class="alert alert-danger" role="alert">
                         {{$message}}
                       </div>
                     @enderror
                   </div>
-                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign Up</button>
-                  <div class="d-flex align-items-center justify-content-center">
-                    <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>
-                    <a class="text-primary fw-bold ms-2" href="{{ route('admin.login') }}">Sign In</a>
-                  </div>
+                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Cambiar contraseña</button>
+                  
                 </form>
-              </div>
-            </div>
+              </div> 
           </div>
         </div>
       </div>
@@ -61,5 +62,6 @@
 @section('scripts')
   <script src="../assets_bak/libs/jquery/dist/jquery.min.js"></script>
   <script src="../assets_bak/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+ 
 @stop
-  

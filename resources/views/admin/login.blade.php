@@ -17,13 +17,33 @@
                     </div>
                     <form method="post">
                     {{ csrf_field() }}
+                        @if(Session::has('messages'))
+                            <div class="alert alert-danger" role="alert">
+                                {{Session::get('messages')}}
+                            </div>   
+                        @endif
+                        @if(Session::has('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{Session::get('success')}}
+                            </div>    
+                        @endif
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" required>
+                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" value="{{ old('email') }}" required>
+                            @error('email')
+                            <div class="alert alert-danger" role="alert">
+                                {{$message}}
+                            </div>
+                            @enderror
                         </div>
                         <div class="mb-4">
                             <label for="exampleInputPassword1" class="form-label">Password</label>
                             <input type="password" class="form-control" id="Password" name="password" required>
+                            @error('password')
+                            <div class="alert alert-danger" role="alert">
+                                {{$message}}
+                            </div>
+                            @enderror
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <div class="form-check">
@@ -32,12 +52,12 @@
                                 Remeber this Device
                             </label>
                             </div>
-                            <a class="text-primary fw-bold" href="./index.html">Forgot Password ?</a>
+                            <a class="text-primary fw-bold" href="{{ route('admin.passwordRecovery') }}">Forgot Password ?</a>
                         </div>
                         <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign In</button>
                         <div class="d-flex align-items-center justify-content-center">
                             <p class="fs-4 mb-0 fw-bold">New to ShortLinks?</p>
-                            <a class="text-primary fw-bold ms-2" href="./authentication-register.html">Create an account</a>
+                            <a class="text-primary fw-bold ms-2" href="{{ route('admin.register') }}">Create an account</a>
                         </div>
                     </form>
                 </div>

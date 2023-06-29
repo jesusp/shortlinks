@@ -6,13 +6,15 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller {
 
     public function login(Request $request)
     {
-        //dd(Auth::guard('admin')); 
+        
+        session()->forget('messages');
         if ($request->isMethod('POST')) {
             $email = $request->get('email');
             $pass = $request->get('password');
@@ -20,14 +22,14 @@ class AuthController extends Controller {
             $remember = true;
 
             $this->validate($request, [
-                'email' => 'required|max:255',
+                'email' => 'required|max:255|email',
                 'password' => 'required',
             ]);
 
             $user = \App\Models\User::where('email', $email)->first();
 
             if (!$user) {
-                session()->flash('messages', 'error|No encontramos registros de este usuario');
+                session()->flash('messages', 'No encontramos registros de este usuario');
                 return redirect()->back();
             }
             
@@ -41,7 +43,7 @@ class AuthController extends Controller {
 
                 return redirect()->route("admin.home");
             }
-            session()->flash('messages', 'error|Contraseña incorrecta');
+            session()->flash('messages', 'Contraseña incorrecta');
         }
 
         if (Auth::guard('admin')->check()) {
@@ -55,7 +57,7 @@ class AuthController extends Controller {
     {
         Auth::guard('admin')->logout();
         session()->flush();
-        return redirect('/');
+        return redirect()->route("admin.login");
     }
 
     public function register(Request $request){
@@ -63,9 +65,9 @@ class AuthController extends Controller {
         if ($request->isMethod('POST')) {
             $user = new User();
             $request->validate([
-                'name' => 'required',
+                'name' => 'required|max:255',
                 'email' => 'required | email | unique:App\Models\User,email',
-                'password' => 'required',
+                'password' => 'required|min:6',
                 
             ]);
             $user->name = $request->name;
@@ -73,9 +75,109 @@ class AuthController extends Controller {
             $user->password = Hash::make($request->password);
             $user->save();
 
-            return view('admin.login');
+            return redirect()->route("admin.login");
         }
         
         return view('admin.register');
+    }
+
+    public function passwordRecovery(){
+        return view('admin.email_reset_password');
+    }
+    
+    public function passwordRecover(Request $request)
+    {
+
+        $email = $request->email;
+        
+        if ($request->isMethod('POST')) {
+            if ( !$email ) {
+                session()->flash('messages', 'Es necesario especificar la cuenta de correo.');
+                return redirect()->back();
+                
+            }
+    
+            $user = \App\Models\User::where('email', $email)->first();
+            if (! $user ) {
+                session()->flash('messages', 'No existe ningún usuario con el correo'. $email);
+                return redirect()->back();
+               
+            }
+    
+            $user->setVerificationCode();
+        }
+       
+        return view('admin.reset_password', [
+            "email" => $email,
+        ]);
+        /*try {
+            
+            $user->sendVerificationCode();
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hubo un error al enviar el correo.',
+                'exception' => $e->getMessage()
+            ]);
+        }*/
+
+        /*return response()->json([
+            'status' => 'success',
+            'message' => 'El código de verificación ha sido enviado a ' . $email,
+        ]);*/
+
+        
+
+    }
+
+    public function passwordVerificationCode(Request $request)
+    {
+       
+        $email = $request->email;
+        $code =  $request->code;
+        $newPassword =  $request->password;
+        session()->forget('code');
+        session()->forget('messages');
+
+        $rules = [
+            'code' => 'required',
+            'password' => 'required|min:6',
+            'passwordConfirm' => 'required|same:password'
+        ];
+        $customMessages = [
+            'code.required' => 'Es necesario especificar código de verificación',
+        ];
+        $request->validate($rules, $customMessages);
+
+        if (! $email ) {
+            session()->flash('messages', 'Es necesario especificar la cuenta de correo');
+            return view('admin.email_reset_password');
+        }
+
+        $user = User::where('email', $email)->first();
+
+        if (! $user ) {
+            session()->flash('messages', 'No existe ningún usuario con el correo'. $email);
+            return view('admin.email_reset_password');
+            
+        }
+
+        if ($user->verification_code != $code) {
+            session()->flash('code', 'Código de verificación incorrecto');
+            return view('admin.reset_password', [
+                "email" => $email,
+            ]);
+            
+        }
+
+        if ($newPassword) {
+            $user->password = bcrypt($newPassword);
+            //$user->passwordChangedEmail();
+            $user->save();
+            session()->flash('success', 'Su contraseña ha sido actualizada.');
+            return redirect()->route("admin.login");
+              
+        }
     }
 }

@@ -19,7 +19,7 @@ class AuthUser
     {
         if (!Auth::guard($guard)->check()) {
             $path = $request->path();
-            return redirect()->route('web.home');
+            return redirect()->route('admin.login');
         }
         
         return $next($request);

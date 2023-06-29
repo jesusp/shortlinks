@@ -28,6 +28,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => "admin"], function () {
     
     Route::get('/register', [\App\Http\Controllers\Auth\AuthController::class, 'register'])->name("admin.register");
     Route::post('/register', [\App\Http\Controllers\Auth\AuthController::class, 'register'])->name("admin.register");
+
+    Route::get('/recuperar-contraseña', [\App\Http\Controllers\Auth\AuthController::class, 'passwordRecovery'])->name("admin.passwordRecovery");
+    Route::post('/recuperar-contraseña', [\App\Http\Controllers\Auth\AuthController::class, 'passwordRecovery'])->name("admin.passwordRecovery");
+
+    Route::post('/confirmar-recuperar-contraseña', [\App\Http\Controllers\Auth\AuthController::class, 'passwordRecover'])->name("admin.confirmPasswordRecovery");
+    Route::get('/confirmar-recuperar-contraseña', [\App\Http\Controllers\Auth\AuthController::class, 'passwordRecover'])->name("admin.confirmPasswordRecovery");
+
+    Route::post('/codigo-recuperar-contraseña', [\App\Http\Controllers\Auth\AuthController::class, 'passwordVerificationCode'])->name("admin.passwordVerificationCode");
     
     Route::group(['middleware' => 'admin.user'], function(){
         Route::get('/', [\App\Http\Controllers\Auth\HomeController::class, 'index'])->name("admin.home");
