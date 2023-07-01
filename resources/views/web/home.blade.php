@@ -207,6 +207,65 @@
       </div>
     </div><!-- End Services Section -->
 
+    <div id="contact" class="text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="section-headline services-head text-center">
+              <h2>Contact Us</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row ">
+          <div class="col-md-6">
+            <div class="form contact-form">
+              <form action="{{ route('web.contact-us') }}" method="post" role="form" class="php-email-form">
+              {{ csrf_field() }}
+                <div class="form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                  @error('name')
+                    <div class="alert alert-danger" role="alert">
+                      {{$message}}
+                    </div>
+                  @enderror
+                </div>
+                <div class="form-group mt-3">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                  @error('email')
+                    <div class="alert alert-danger" role="alert">
+                      {{$message}}
+                    </div>
+                  @enderror
+                </div>
+                <div class="form-group mt-3">
+                  <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                  @error('subject')
+                    <div class="alert alert-danger" role="alert">
+                      {{$message}}
+                    </div>
+                  @enderror
+                </div>
+                <div class="form-group mt-3">
+                  <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+                  @error('message')
+                    <div class="alert alert-danger" role="alert">
+                      {{$message}}
+                    </div>
+                  @enderror
+                </div>
+                <div class="my-3">
+                  <div class="loading">Loading</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message">Your message has been sent. Thank you!</div>
+                </div>
+                <div class="text-center"><button type="submit">Send Message</button></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
     <!-- ======= Rviews Section ======= --
     <div class="reviews-area">
       <div class="row g-0">

@@ -50,6 +50,7 @@ Route::get('/', [HomeController::class , 'index'])->name('web.home');
 Route::post('/', [HomeController::class , 'index'])->name('web.home-post');
 Route::get('/counter', [HomeController::class , 'counter'])->name('web.counter');
 Route::get('/{slug}', [HomeController::class , 'openLink'])->name('web.open-link');
+Route::post('/contact-us', [HomeController::class , 'contactUs'])->name('web.contact-us');
 /*
     Route::get('/', function () {
         return view('welcome');

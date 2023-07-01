@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Library\Helpers;
 use App\Models\ShortLink;
 use Redirect;
+use App\Mail\ContactUs;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller {
 
@@ -77,6 +79,20 @@ class HomeController extends Controller {
             //Helpers::getRealUrl();
         }
         return view('web.counter', $data);
+    }
+
+    public function contactUs(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'subject' => 'required',
+            'email' => 'required|email',
+            'message' => 'required',
+        ]);
+        
+        $mail = new ContactUs($request->all());
+        Mail::to("dayana@fidelityapps.mx")->send($mail);
+
+        return true;
     }
 
 }
